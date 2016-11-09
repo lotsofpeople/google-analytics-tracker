@@ -37,7 +37,7 @@ is a Polymer Element for [Google Analytics Web Tracking](https://developers.goog
 
       },
 
-      sendEvent: function() {
+      sendEvent: function(e) {
         ga('send', 'event', e.detail.category, e.detail.action, e.detail.label, e.detail.value);
       },
 
