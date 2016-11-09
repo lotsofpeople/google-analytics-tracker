@@ -35,7 +35,7 @@ is a Polymer Element for [Google Analytics Web Tracking](https://developers.goog
           observer: '_trackingIdChanged'
         },
 
-        debug: {
+        debugMode: {
           type: Boolean,
           value: false
         }
@@ -43,23 +43,26 @@ is a Polymer Element for [Google Analytics Web Tracking](https://developers.goog
       },
 
       sendEvent: function(e) {
-        if(this.debug) {
+        if(this.debugMode) {
           console.log('sendEvent', e.detail);
         }
         ga('send', 'event', e.detail.category, e.detail.action, e.detail.label, e.detail.value);
       },
 
       sendPage: function(e) {
-        if(this.debug) {
+        if(this.debugMode) {
           console.log('sendPage', e.detail);
         }
-        if (e != undefined && e.detail.path !== undefined) {
+        if (e !== undefined && e.detail !== undefined && e.detail.path !== undefined) {
           ga('set', 'page', e.detail.path);
         }
         ga('send', 'pageview');
       },
 
       _trackingIdChanged: function(newTrackingId, oldTrackingId) {
+        if(this.debugMode) {
+          console.log('_trackingIdChanged', newTrackingId, oldTrackingId);
+        }
         if(newTrackingId && oldTrackingId === null) {
           ga('create', newTrackingId, 'auto');
           this.sendPage({});
